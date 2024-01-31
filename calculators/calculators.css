@@ -3,7 +3,7 @@
 이 CSS가 필요하다.
 */
 
-@import url('/variables.css');
+@import url('./variables.css');
 
 /* 라디오 버튼 보더 두께 변수. */
 :root {
