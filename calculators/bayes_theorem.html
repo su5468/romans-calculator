@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/calculators/calculators.css">
+    <link rel="stylesheet" href="/calculators/bayes_theorem.css">
+    <title>김낭만 계산기 (Romans Calculator)</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    crossorigin="anonymous"></script>
+    <script src="/script.js"></script>
+    <script type="module" src="/calculators/calculators.js"></script>
+    <script type="module" src="/calculators/bayes_theorem.js"></script>
+
+    <div class="template-container" id="divHeaderContainer"></div>
+
+    <div class="template-container" id="divNavContainer"></div>
+    
+    <main>
+        <article id="calculatorArea">
+            <h1>역확률 계산기</h1>
+            <h2>(베이즈 정리 계산기)</h2>
+
+            <b>단위</b>
+            <label>
+                <input type="radio" name="unit" value="decimal" checked/>
+                소수점(0~1)
+            </label>
+            <label>
+                <input type="radio" name="unit" value="percent" />
+                퍼센트(0~100%)
+            </label>            
+
+            <div id="divTextInputs">
+                <template id="templateProbTextInput">
+                    <label>
+                        <span class="label-text-input">{{}}</span>
+                        <input type="text" inputmode="decimal" autocomplete="off" placeholder="모름" />
+                        <span class="label-text-input unit-specifier">%</span>
+                    </label>
+                </template>
+            </div>
+
+            <p id="exceptionNotice" class="invisible"></p>
+
+            <button type="button" id="calculate">
+                계산하기!
+            </button>
+        </article>
+
+        <p>
+            <a href="https://ko.wikipedia.org/wiki/%EB%B2%A0%EC%9D%B4%EC%A6%88_%EC%A0%95%EB%A6%AC">
+                베이즈 정리</a>는 조건부 확률에 기반한 간단한 공식입니다.<br>
+                역확률 문제를 풀 때 자주 사용됩니다.<br>
+                예를 들어, 검사자의 10%정도가 양성이 나오는, 99% 정확도의 검사에서 양성 판정을 받았는데,<br>
+                이 병이 100명 당 1명만 걸리는 병이라고 하면, 내가 병에 걸렸을 확률은 얼마나 될까요?<br>
+                놀랍게도, 10%가 채 되지 않는답니다!
+            
+        </p>
+    </main>
+
+    <div class="template-container" id="divFooterContainer"></div>
+</body>
+</html>

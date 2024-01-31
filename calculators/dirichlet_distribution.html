@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/calculators/calculators.css">
+    <link rel="stylesheet" href="/calculators/dirichlet_distribution.css">
+    <title>김낭만 계산기 (Romans Calculator)</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    crossorigin="anonymous"></script>
+    <script src="/script.js"></script>
+    <script type="module" src="/calculators/calculators.js"></script>
+    <script type="module" src="/calculators/dirichlet_distribution.js"></script>
+    
+    <div class="template-container" id="divHeaderContainer"></div>
+
+    <div class="template-container" id="divNavContainer"></div>
+    
+    <main>
+        <article id="calculatorArea">
+            <h1>예상 별점 계산기</h1>
+            <h2>(디리클레 분포 계산기)</h2>
+            <b>별점의 개수</b>
+            <label>
+                <input type="radio" name="num-of-stars" value=5 checked/>
+                ★1 ~ ★5
+            </label>
+            <label>
+                <input type="radio" name="num-of-stars" value=10 />
+                ★1 ~ ★10
+            </label>
+
+            <div id="divTextInputs">
+                <b>별점</b>
+                <template id="templateStarTextInput">
+                    <label>
+                        <span class="label-text-input">★{{}}</span>
+                        <input type="text" inputmode="numeric" autocomplete="off" placeholder="0" />
+                        개
+                    </label>
+                </template>
+            </div>
+
+            <button type="button" id="calculate">
+                계산하기!
+            </button>
+
+            <div id="answerArea">
+                <b>결과</b><br>
+                예상되는 별점의 기댓값은 <span id="answer">0.00</span> 입니다.<br>
+                <div class="weak-texts">※ 빈 칸은 0으로 간주됩니다.</div>
+            </div>
+        </article>
+
+        <p>
+            <a href="https://ko.wikipedia.org/wiki/%EB%94%94%EB%A6%AC%ED%81%B4%EB%A0%88_%EB%B6%84%ED%8F%AC">
+                디리클레 분포</a>는
+            가능한 경우의 수가 2개 이상일 때, 각 사건이 발생할 확률의 확률을 나타낼 때 사용합니다.<br> 
+            이 계산기는 이를 기반으로 조금 더 믿을만한 별점을 알려 줍니다.<br>
+            ★5가 10개인 음식점과, ★5가 100개이고 ★1이 10개인 음식점 중 어디가 더 괜찮을까요?<br>
+            지금 한번 계산해보세요!
+        </p>
+        <p>
+            이 계산기는 한 <a href="https://www.youtube.com/watch?v=gMmVRGEDTdk">유튜브 영상</a>에서 영감을 받아 제작되었습니다.
+        </p>
+    </main>
+
+    <div class="template-container" id="divFooterContainer"></div>
+</body>
+</html>

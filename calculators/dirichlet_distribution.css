@@ -1,0 +1,37 @@
+/* 별점 입력상자 관련. */
+#divTextInputs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+label {
+    transition: opacity 0.5s ease-in-out;
+}
+
+label.invisible {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+    transition: opacity 0s;
+}
+
+.label-text-input {
+    display: inline-block;
+    width: 2em;
+}
+
+
+/* 결과란 관련. */
+#answerArea {
+    margin-top: 1em;
+}
+
+#answer {
+    transition: opacity 0.3s ease-out;
+}
+
+#answer.updated {
+    opacity: 0;
+    transition: opacity 0s;
+}

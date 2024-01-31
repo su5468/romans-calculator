@@ -1,0 +1,207 @@
+/* 
+모든 페이지는 이 CSS가 필요하다.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@600;800&display=swap');
+@import url('/variables.css');
+
+/* 기본 서식. */
+body{
+  margin: 0;
+  background-color: var(--back-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  color: var(--main-color);
+}
+
+a {
+  color: var(--sub-color);
+  text-decoration: none;
+}
+
+main p {
+  margin: 20px;
+}
+
+.weak-texts {
+  color: var(--sub-color);
+}
+
+
+/* 기초적인 사이트 구조. */
+.template-container {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: max-content;
+}
+
+header {
+  background-color: var(--back-color);
+  background-image: linear-gradient(to top, var(--back-color), var(--menu-color));
+  /* background-image: url('../images/background.jpg'); */
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-color {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 25px;
+}
+
+#divNavContainer {
+  position: sticky;
+  top: 20px;
+}
+
+.navigation-menu {
+  background-color: var(--menu-color);
+  height: 80vh;
+  width: min(10vw, 45px);
+  position: sticky;
+  top: 10px;
+  transition: width 1s;
+  transition-delay: 0.3s;
+  border: 2px solid var(--main-color);
+  border-radius: 0 10px 10px 0;
+  border-left: 0;
+}
+
+main {
+  width: 1px;
+  flex-grow: 1;
+  padding-bottom: 15vh;
+}
+
+footer {
+  background-color: var(--back-color);
+  background-image: linear-gradient(to bottom, var(--back-color), var(--menu-color));
+  width: 100vw;
+  padding: 15px 0;
+  text-align: center;
+}
+
+
+/* 헤더 내부 타이틀. */
+#titleContainer {
+  padding: 10px;
+}
+
+#siteTitle {
+  font-size: min(50px, 20vw);
+  font-weight: 800;
+  color: var(--main-color);
+}
+
+#siteSubTitle {
+  font-size: min(29px, 12vw);
+  white-space: nowrap;
+  color: var(--main-color);
+}
+
+
+/* 컬러 세팅 */
+.button-color {
+  font-family: inherit;
+  height: 3em;
+  width: 5em;
+  border: 0;
+}
+
+.button-color:first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+.button-color:last-child {
+  border-radius: 0 15px 15px 0;
+}
+
+.button-color[value="light"] {
+  background-color: var(--light-back);
+  color: var(--light-main);
+}
+
+.button-color[value="dark"] {
+  background-color: var(--dark-back);
+  color: var(--dark-main);
+}
+
+.button-color[value="black"] {
+  background-color: var(--black-back);
+  color: var(--black-main);
+}
+
+.button-color:focus-visible {
+  outline: 0;
+}
+
+.button-color:hover {
+  filter: brightness(80%);
+}
+
+.button-color:active {
+  filter: brightness(60%);
+
+}
+
+.icon-svg {
+  filter: var(--icon-filter);
+}
+
+
+/* 햄버거 버튼 및 네비게이션 바 관련. */
+.hamburger-button {
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger-bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--main-color);
+  margin: 3px 0;
+  transition: opacity 1s, transform 1s;
+  transform-origin: left;
+
+}
+
+.navigation-list {
+  list-style-type: none;
+}
+
+.navigation-menu li {
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+  visibility: hidden;
+}
+
+.navigation-menu.active {
+  width: min(45vw, 350px);
+  transition-delay: 0s;
+}
+
+.navigation-menu.active div:nth-child(1) {
+  transform: rotate(45Deg);
+}
+
+.navigation-menu.active div:nth-child(2) {
+  opacity: 0;
+}
+
+.navigation-menu.active div:nth-child(3) {
+  transform: rotate(-45Deg);
+}
+
+.navigation-menu.active li {
+  opacity: 1;
+  transition-delay: 0.5s;
+  visibility: visible;
+}

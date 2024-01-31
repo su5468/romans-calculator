@@ -1,0 +1,39 @@
+/* 
+CSS 변수.
+다른 데서 임포트해서 쓰면 된다.
+참조: https://codepen.io/sosuke/pen/Pjoqqp 에서 색상에 대한 svg 아이콘 필터를 찾을 수 있음.
+*/
+
+:root {
+    --light-main: rgb(22, 22, 22);
+    --light-back: rgb(241, 241, 241);
+
+    --dark-main: rgb(226, 226, 226);
+    --dark-back: rgb(36, 36, 36);
+
+    --black-main: rgb(232, 232, 232);
+    --black-back: black;
+
+    --main-color: var(--light-main);
+    --sub-color: rgb(117, 117, 117);
+    --back-color: var(--light-back);
+    --menu-color: rgb(209, 209, 209);
+    --icon-filter: invert(0%) sepia(21%) saturate(6601%) hue-rotate(22deg) brightness(90%) contrast(83%);
+}
+
+:root.dark {
+    --main-color: var(--dark-main);
+    --sub-color: gray;
+    --back-color: var(--dark-back);
+    --menu-color: rgb(51, 51, 51);
+    --icon-filter: invert(88%) sepia(66%) saturate(34%) hue-rotate(351deg) brightness(110%) contrast(77%);
+}
+
+:root.black {
+    --main-color: var(--black-main);
+    --sub-color: gray;
+    --back-color: var(--black-back);
+    --menu-color: rgb(30, 30, 30);
+    --icon-filter: invert(99%) sepia(0%) saturate(3701%) hue-rotate(54deg) brightness(115%) contrast(82%);
+}
+
