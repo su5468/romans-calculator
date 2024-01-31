@@ -73,10 +73,10 @@ input[type="radio"]:hover {
 /* 텍스트 상자. */
 input[type="text"] {
     font-family: inherit;
-    width: 4em;
+    width: 3em;
     color: var(--main-color);
-    max-width: 40%;
-    min-width: 4em;
+    max-width: 30%;
+    min-width: 3em;
     border: 2px solid var(--sub-color);
     border-radius: 0.5em;
     background-color: transparent;
