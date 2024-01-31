@@ -12,7 +12,7 @@ function setThemeColor(color) {
 }
 
 // 테마 설정
-let theme = localStorage.getItem('theme') ?? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+let theme = localStorage.getItem('theme') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 setThemeColor(theme);
 
 $((e) => {
@@ -21,7 +21,8 @@ $((e) => {
     // 네비게이션바는 로드 후에 햄버거버튼의 토글 기능을 생성함.
     $('#divHeaderContainer').load('/romans-calculator/template.html header', (e) => {
         $('.button-color').on('click', (e) => {
-            setThemeColor($(e.target).val());
+            let color = $(e.target).val();
+            setThemeColor(color);
             localStorage.setItem('theme', color);
         });
     });
