@@ -2,13 +2,18 @@
 모든 페이지는 이 스크립트가 필요하다.
 */
 
+/**
+ * 사이트 테마 색상을 바꾼다.
+ * 로컬스토리지에 저장은 안 하므로 주의할 것.
+ * @param {string} color 테마 색상. 현재 'light', 'dark', 'black' 지원.
+ */
 function setThemeColor(color) {
     $(':root').attr('class', color);
-    localStorage.setItem('theme', color);
 }
 
 // 테마 설정
-setThemeColor(localStorage.getItem('theme'));
+let theme = localStorage.getItem('theme') ?? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+setThemeColor(theme);
 
 $((e) => {
     // 헤더, 네비게이션바, 푸터 로드.
@@ -17,6 +22,7 @@ $((e) => {
     $('#divHeaderContainer').load('/romans-calculator/template.html header', (e) => {
         $('.button-color').on('click', (e) => {
             setThemeColor($(e.target).val());
+            localStorage.setItem('theme', color);
         });
     });
     $('#divNavContainer').load('/romans-calculator/template.html nav.navigation-menu', (e) => {

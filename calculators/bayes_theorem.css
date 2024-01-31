@@ -11,6 +11,7 @@
 }
 
 .unit-specifier {
+    width: auto;
     transition: opacity 0.3s ease-in-out;
 }
 
