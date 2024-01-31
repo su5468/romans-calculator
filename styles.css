@@ -3,7 +3,7 @@
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@600;800&display=swap');
-@import url('./variables.css');
+@import url('romans-calculator/variables.css');
 
 /* 기본 서식. */
 body{
