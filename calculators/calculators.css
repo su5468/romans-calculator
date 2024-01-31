@@ -3,7 +3,7 @@
 이 CSS가 필요하다.
 */
 
-@import url('romans-calculator/variables.css');
+@import url('/romans-calculator/variables.css');
 
 /* 라디오 버튼 보더 두께 변수. */
 :root {
