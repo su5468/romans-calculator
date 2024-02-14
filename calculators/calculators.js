@@ -18,6 +18,42 @@ export function rangeWithPrefix(start, end, prefix='') {
 }
 
 /**
+ * 이터러블에서 원하는 항목의 개수를 센다.
+ * @param {Iterable} iter 순회하며 아이템을 꺼낼 수 있는 객체.
+ * @param {*} item 이터러블에서 개수를 세고 싶은 값.
+ * @returns {number} 이터러블에서 찾고자 하는 아이템의 개수.
+ */
+export function countItemFromIter(iter, item) {
+    let ret = 0;
+    for (let e of iter) {
+        ret += e === item;
+    }
+    return ret;
+}
+
+/**
+ * 잘못된 입력에 대해 경고문을 띄운다.
+ * 처음엔 경고문이 등장하고,
+ * 경고문이 보이는 상태에서 또 호출되면 경고문을 진동시킨다.
+ * @param {string} text 경고 엘리먼트에서 보여줄 내용.
+ */
+export function alertInvalid(text) {
+    $('#exceptionNotice').text(text);
+    if ($('#exceptionNotice').hasClass('invisible')) {
+        $('#exceptionNotice').removeClass('invisible');
+    } else {
+        addClassAwhile($('#exceptionNotice'), 'vibrate', 300);
+    }
+}
+
+/**
+ * 입력이 유효해졌을 때 호출하여 경고문을 숨긴다.
+ */
+export function unalertInvalid() {
+    $('#exceptionNotice').addClass('invisible');
+}
+
+/**
  * html 객체를 n번 복사해서, 각각의 html 속성과 문자를 포매팅하고 원하는 위치에 배치한다.
  * @param {jQuery} $template 복사할 JQuery 객체.
  * @param {number} n 만들 개수.
@@ -64,7 +100,7 @@ export function addClassAwhile($target, className, ms) {
  * @returns {undefined}
  */
 export function restrictInputValue($textInput, min, max) {
-    if (!isPureNumber($textInput.val())) {
+    if (!isPureNumberString($textInput.val())) {
         return;
     }
     
@@ -83,7 +119,7 @@ export function restrictInputValue($textInput, min, max) {
  * @param {string} str 확인하고자 하는 문자열.
  * @returns {boolean} 해당 문자열이 순수한 숫자인지의 여부.
  */
-export function isPureNumber(str) {
+export function isPureNumberString(str) {
     return /^\d+(\.\d+)?$/.test(str);
 }
 
@@ -98,7 +134,7 @@ export function convertTextInputValue($textInput, coeff) {
     if (!$($textInput).val()) {
         return;
     }
-    $($textInput).val(toDecimalString(multiplyPrecisely($($textInput).val(), coeff)));
+    $($textInput).val(toDecimalString(multiplyPrecisely($($textInput).val(), coeff).toExponential()));
 }
 
 /**
@@ -125,24 +161,24 @@ export function multiplyPrecisely(a, b) {
 
 /**
  * 지나치게 크거나 작아서 지수 표기법으로 표현되는 숫자를 일반 표기법 문자열로 나타낸다.
- * @param {number} n 문자열 표현으로 변환하고 싶은 숫자.
- * @returns {string} n을 지수 표기법이 아닌 일반적인 표기법으로 표현한 문자열.
+ * @param {string} exponentialString 지수 표기법 문자열.
+ * @returns {string} n을 지수 표기법이 아닌 일반적인 십진 표기법으로 표현한 문자열.
  */
-export function toDecimalString(n) {
-    let exponentialString = n.toExponential();
-    let {mantissa, exp} = exponentialString.match(/^(?<mantissa>\d+(?:\.\d+)?)e(?<exp>[+-]\d+)$/).groups;
+export function toDecimalString(exponentialString) {
+    let {mantissa, exp} = getMantissaAndExpString(exponentialString);
     exp = Number(exp);
     let pointIdx = getNumberLengthBeyondPoint(mantissa, exp >= 0);
     let mantissaPointRemoved = mantissa.replace('.', '');
+    let answer = mantissa;
     
     if (exp < 0) {
         exp = -exp;
         if (exp >= pointIdx) {
             exp -= pointIdx;
-            return '0.' + '0'.repeat(exp) + mantissaPointRemoved;
+            answer = '0.' + '0'.repeat(exp) + mantissaPointRemoved;
         } else {
             pointIdx -= exp;
-            return mantissaPointRemoved.replace(new RegExp(`(^.{${pointIdx}})`), '$1.');
+            answer = mantissaPointRemoved.replace(new RegExp(`(^.{${pointIdx}})`), '$1.');
         }
 
     }
@@ -150,33 +186,88 @@ export function toDecimalString(n) {
     if (exp > 0) {
         if (exp >= pointIdx) {
             exp -= pointIdx;
-            return mantissaPointRemoved + '0'.repeat(exp);
+            answer = mantissaPointRemoved + '0'.repeat(exp);
         } else {
             pointIdx -= exp;
-            return mantissaPointRemoved.replace(new RegExp(`(.{${pointIdx}}$)`), '.$1');
+            answer = mantissaPointRemoved.replace(new RegExp(`(.{${pointIdx}}$)`), '.$1');
         }
 
     }
 
-    return mantissa;
+    answer = removeUnnecessaryZeros(answer);
+    return answer;
+}
+
+/**
+ * 주어진 지수 표기법 문자열을 분해하여 지수와 가수를 추출한다.
+ * @param {string} exponentialString 지수 표기법 문자열.
+ * @returns {object} 문자열에서 지수와 가수를 정규표현식으로 추출한 결과.
+ */
+export function getMantissaAndExpString(exponentialString) {
+    return exponentialString.match(/^(?<mantissa>\d+(?:\.\d+)?)e(?<exp>[+-]?\d+)$/).groups;
 }
 
 /**
  * 숫자를 나타내는 문자열에서 소수점 앞 또는 뒤로 몇 개의 숫자가 등장하는지 확인한다.
- * @param {string} NumberString 정수 또는 실수를 나타내는 문자열.
+ * @param {string} numberString 정수 또는 실수를 나타내는 문자열.
  * @param {boolean} reversed true면 점 뒤의 숫자 개수, false면 점 앞의 숫자 개수.
  * @returns {number} 점 앞 또는 뒤로 숫자가 몇 개 위치했는지의 여부.
  */
-export function getNumberLengthBeyondPoint(NumberString, reversed=false) {
-    let idx = reversed ? NumberString.length - NumberString.indexOf('.') - 1 : NumberString.indexOf('.');
+export function getNumberLengthBeyondPoint(numberString, reversed=false) {
+    let idx = reversed ? numberString.length - numberString.indexOf('.') - 1 : numberString.indexOf('.');
     if (idx === -1) {
-        idx = NumberString.length;
-    } else if (idx === NumberString.length) {
+        idx = numberString.length;
+    } else if (idx === numberString.length) {
         idx = 0;
     }
 
     return idx;
 }
+
+/**
+ * 일반적인 십진 표기법 문자열을 정규화된 지수 표기법으로 변환한다.
+ * @param {string} decimalString 십진 표기법 문자열.
+ * @returns {string} 지수 표기법 문자열.
+ */
+export function toExponentialString(decimalString) {
+    decimalString = removeUnnecessaryZeros(decimalString);
+    let [intString, floatString=''] = decimalString.split('.');
+
+    if (intString === '0') {
+        let {mantissa, expZeros} = floatString.match(/^(?<expZeros>0*)(?<mantissa>.*)$/).groups;
+        let exp = -(expZeros.length + 1);
+
+        mantissa = mantissa.replace(/^(.)(.)/, '$1.$2');
+
+        return mantissa + 'e' + exp;
+    }
+    if (floatString === '') {
+        let {mantissa, expZeros} = intString.match(/^(?<mantissa>.*?)(?<expZeros>0*)$/).groups;
+        let exp = expZeros.length
+        
+        exp += mantissa.length - 1
+        mantissa = mantissa.replace(/^(.)(.)/, '$1.$2');
+
+        return mantissa + 'e+' + exp;
+    }
+
+    let exp = getNumberLengthBeyondPoint(decimalString, false) - 1;
+    decimalString = decimalString.replace('.', '');
+    decimalString = decimalString.replace(/^(.)(.)/, '$1.$2');
+    return decimalString + 'e+' + exp;
+}
+
+/**
+ * 숫자를 표현하는 문자열에서 불필요한 0을 삭제한다.
+ * '00123' -> '123'
+ * '12301.20' -> '12301.2'
+ * @param {string} decimalString 0을 제거할 숫자를 표현하는 문자열.
+ * @returns {string} 불필요한 0이 제거된 숫자를 표현하는 문자열.
+ */
+export function removeUnnecessaryZeros(decimalString) {
+    return decimalString.replace(/^0+(\d)/, '$1').replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+}
+
 
 // 텍스트 입력상자(input[type="text"])와 관련된 함수들.
 /**
@@ -239,7 +330,7 @@ $((e) => {
             gotoAnotherCalculatorTextInput(e.target, 1);
 
             if ($(':focus').is(e.target)) {
-                $('#calculate').focus().trigger($.Event('keydown', {'key': 'Enter'}));
+                $('#calculate').focus().trigger($.Event('click'));
             }
         }
     });
@@ -248,8 +339,6 @@ $((e) => {
     $('#calculate').on('keydown', (e) => {
         if (e.key === 'Enter' && e.shiftKey) {
             gotoLastCalculatorTextInput();
-        } else if (e.key === 'Enter') {
-            $('#calculate').click();
         }
     })
 });

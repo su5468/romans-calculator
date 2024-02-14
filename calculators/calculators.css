@@ -111,3 +111,29 @@ input[type="text"]:focus {
     background-color: var(--sub-color);
     color: var(--back-color);
 }
+
+
+/* 경고문 . */
+#exceptionNotice {
+    color: tomato;
+    margin: 8px 0 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#exceptionNotice.vibrate {
+    animation: vibrate 0.1s infinite;
+}
+
+#exceptionNotice.invisible {
+    visibility: hidden;
+    opacity: 0;
+}
+
+@keyframes vibrate {
+    from {
+        transform: translate(1px)
+    }
+    to {
+        transform: translate(-1px)
+    }
+}

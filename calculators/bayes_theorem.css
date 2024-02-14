@@ -15,28 +15,7 @@
     transition: opacity 0.3s ease-in-out;
 }
 
-.invisible {
+.unit-specifier.invisible {
     visibility: hidden;
     opacity: 0;
-}
-
-
-/* 경고문 관련. */
-#exceptionNotice {
-    color: tomato;
-    margin: 8px 0 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.vibrate {
-    animation: vibrate 0.1s infinite;
-}
-
-@keyframes vibrate {
-    from {
-        transform: translate(1px)
-    }
-    to {
-        transform: translate(-1px)
-    }
 }

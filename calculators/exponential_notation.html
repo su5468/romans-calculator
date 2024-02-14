@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/romans-calculator/styles.css">
+    <link rel="stylesheet" href="/romans-calculator/calculators/calculators.css">
+    <link rel="stylesheet" href="/romans-calculator/calculators/exponential_notation.css">
+    <title>지수 표기법 변환기 - 김낭만 계산기 (Romans Calculator)</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    crossorigin="anonymous"></script>
+    <script src="../script.js"></script>
+    <script type="module" src="/romans-calculator/calculators/exponential_notation.js"></script>
+    <script type="module" src="/romans-calculator/calculators/calculators.js"></script>
+
+    <div class="template-container" id="divHeaderContainer"></div>
+
+    <div class="template-container" id="divNavContainer"></div>
+    
+    <main>
+        <article id="calculatorArea">
+            <h1>지수 표기법 변환기</h1>
+
+            <div id="divTextInputs">
+                <template id="templateNumTextInput">
+                    <label>
+                        <span class="label-text-input">{{}}</span>
+                        <input type="text" inputmode="{{}}" autocomplete="off" placeholder="입력" />
+                    </label>
+                </template>
+            </div>
+
+            <p id="exceptionNotice" class="invisible"></p>
+
+            <button type="button" id="calculate">
+                계산하기!
+            </button>
+        </article>
+
+        <p>
+            <a href="https://ko.wikipedia.org/wiki/%EA%B3%BC%ED%95%99%EC%A0%81_%EA%B8%B0%EC%88%98%EB%B2%95">
+                지수 표기법</a>은 매우 크거나 정밀한 수를 표현하기 위한 방법입니다.<br>
+            지수 표기법 변환기로 지수 표기법과 십진 표기법 수를 변환해보세요!<br>
+            계산의 편의상, 양수 값만 지원합니다(음수 값은 양수 값에 -만 붙고, 달라지는 점은 없습니다).
+        </p>
+    </main>
+
+    <div class="template-container" id="divFooterContainer"></div>
+</body>
+</html>

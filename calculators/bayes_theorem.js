@@ -1,4 +1,4 @@
-import {renderTemplateNTimes, addClassAwhile, restrictInputValue, convertTextInputValue} from './calculators.js';
+import {renderTemplateNTimes, countItemFromIter, alertInvalid, unalertInvalid, restrictInputValue, convertTextInputValue} from './calculators.js';
 
 /**
  * 확률 입력 상자들의 단위를 소수점과 퍼센트에서 토글한다.
@@ -56,42 +56,6 @@ function calculateBayesTheorem(params) {
                 return [pab * pb / pa, i];
         }
     }
-}
-
-/**
- * 이터러블에서 원하는 항목의 개수를 센다.
- * @param {Iterable} iter 순회하며 아이템을 꺼낼 수 있는 객체.
- * @param {*} item 이터러블에서 개수를 세고 싶은 값.
- * @returns {number} 이터러블에서 찾고자 하는 아이템의 개수.
- */
-function countItemFromIter(iter, item) {
-    let ret = 0;
-    for (let e of iter) {
-        ret += e === item;
-    }
-    return ret;
-}
-
-/**
- * 잘못된 입력에 대해 경고문을 띄운다.
- * 처음엔 경고문이 등장하고,
- * 경고문이 보이는 상태에서 또 호출되면 경고문을 진동시킨다.
- * @param {string} text 경고 엘리먼트에서 보여줄 내용.
- */
-function alertInvalid(text) {
-    $('#exceptionNotice').text(text);
-    if ($('#exceptionNotice').hasClass('invisible')) {
-        $('#exceptionNotice').removeClass('invisible');
-    } else {
-        addClassAwhile($('#exceptionNotice'), 'vibrate', 300);
-    }
-}
-
-/**
- * 입력이 유효해졌을 때 호출하여 경고문을 숨긴다.
- */
-function unalertInvalid() {
-    $('#exceptionNotice').addClass('invisible');
 }
 
 
