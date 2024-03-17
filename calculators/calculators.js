@@ -182,8 +182,7 @@ export function toDecimalString(exponentialString) {
         }
 
     }
-
-    if (exp > 0) {
+    else if (exp > 0) {
         if (exp >= pointIdx) {
             exp -= pointIdx;
             answer = mantissaPointRemoved + '0'.repeat(exp);
